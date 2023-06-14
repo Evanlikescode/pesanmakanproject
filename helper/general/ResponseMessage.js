@@ -26,7 +26,7 @@ const response = {
         "updateFailed": "Failed to update your account",
         "updatePasswordSuccess": "Successfully changed your password",
         "updatePasswordFailed": "Failed to change your password",
-        "passwordNotMatched": "Please check your input password fields again"
+        "passwordNotMatched": "Please check your inputted password again"
 
     },
     "authMessage": {

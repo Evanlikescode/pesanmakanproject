@@ -107,6 +107,7 @@ class User{
                     if(parser.length == 0){ 
                         result(null ,handlers.updateResponse(null, null, null))
                     }else{
+                        const data = [infAuth, query]
                         con.query(`SELECT  fullname FROM ${tableName.user} 
                         WHERE uuid_user != '${infAuth.id_user}' AND fullname = '${query.fullname}' `, (err,rowz) => {
                             if(JSON.parse(JSON.stringify(rowz)).length == 0 ){
@@ -114,7 +115,7 @@ class User{
                                     ${tableName.user} SET fullname = "${query.fullname}"
                                     WHERE email = "${infAuth.email}"`
                                 )
-                                result(null, handlers.updateResponse(null, query, "success"))
+                                result(null, handlers.updateResponse(null, data, "success"))
                             }else{
                                 result(null ,handlers.updateResponse(null, null, null))
                             }

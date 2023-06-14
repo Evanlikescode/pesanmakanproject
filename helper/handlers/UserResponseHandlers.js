@@ -155,9 +155,9 @@ class UserResponseHandlers  {
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.updateSuccess
                 responseStruct.data = {
-                    "fullname": `${data.fullname}`,
-                    "old_fullname": `${data.old_fullname}`,
-                    "email": `${data.email}`
+                    "fullname": `${data[1].fullname}`,
+                    "old_fullname": `${data[0].fullname}`,
+                    "email": `${data[0].email}`
                 }
                 return responseStruct
             }
