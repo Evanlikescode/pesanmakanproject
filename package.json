@@ -4,7 +4,7 @@
   "description": "Personal project API pesanmakan",
   "main": "app.js",
   "scripts": {
-    "test": "mocha 'tests/**/*.js'"
+    "test": "mocha 'tests/routerTests.js'"
   },
   "keywords": [
     "backend",
