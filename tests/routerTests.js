@@ -9,6 +9,6 @@ const login = new loginTest()
 
 
 // LoginTests
-login.loginTest()
+login.login()
 login.profile()
 login.logout()

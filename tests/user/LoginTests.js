@@ -2,7 +2,7 @@ const request = require('supertest')
 const chai = require('chai')
 const chaiHttp = require("chai-http")
 const server = require('../../app')
-const baseTests = new require('../baseTests')
+const BaseTests = new require('../BaseTests')
 
 
 chai.should()
@@ -10,7 +10,7 @@ chai.use(chaiHttp)
 
 
 
-class LoginTests extends baseTests{
+class LoginTests extends BaseTests{
 
     profile(){
         describe("GET /profile", () => {

@@ -31,9 +31,9 @@ class UserResponseHandlers  {
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.signUpSuccess
                 responseStruct.data = {
-                    "id": data.id,
+                    "email": `${data.email}`,
                     "fullname": `${data.fullname}`,
-                    "email": `${data.email}`
+                    "id": data.id
                 }
                 return responseStruct
             }

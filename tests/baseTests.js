@@ -20,30 +20,28 @@ class GeneralTests{
         this.cookies = ''
     }  
 
-
-    loginTest(){
-        describe('Login Controller API', () => {
-            describe("GET /login", () => {
-                it("It should be logged in", (done) => {
-                    request(server)
-                        .get("/login")
-                        .set('Accept','application/json')
-                        .expect('Content-Type', /json/)
-                        .send({
-                            "email": "testin_z29@email.com",
-                            "password": "123456"
-                        })
-                        .end((err, response) => {
-                            response.should.have.status(201)
-                            response.body.should.have.property('http').eql(201)
-                            response.body.should.have.property('status').eql("success")
-                            response.body.should.have.property('message').eql("login succeed")
-                            response.body.should.have.property('data').eql(this.data)
-                            this.cookies = response.headers['set-cookie'].pop().split(';')[0];
-                            done();
-                        })
-                })
+    login(){
+        describe("GET /login", () => {
+            it("It should be logged in", (done) => {
+                request(server)
+                    .get("/login")
+                    .set('Accept','application/json')
+                    .expect('Content-Type', /json/)
+                    .send({
+                        "email": "testin_z29@email.com",
+                        "password": "123456"
+                    })
+                    .end((err, response) => {
+                        response.should.have.status(201)
+                        response.body.should.have.property('http').eql(201)
+                        response.body.should.have.property('status').eql("success")
+                        response.body.should.have.property('message').eql("login succeed")
+                        response.body.should.have.property('data').eql(this.data)
+                        this.cookies = response.headers['set-cookie'].pop().split(';')[0];
+                        done();
+                    })
             })
+        
         })
     }
 }
