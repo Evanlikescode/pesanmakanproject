@@ -1,19 +1,19 @@
 const LoginController = require('../controllers/seller/LoginController')
-// const SettingsController = require('../controllers/user/SettingsController')
+const SettingsController = require('../controllers/seller/SettingsController')
 const router = require('express').Router()
 const authenticator = require('../helper/general/Authenticator')
 
 
 router.get('/login', authenticator.authProtect, LoginController.login)
 router.get('/logout', authenticator.protect, LoginController.logout)
-// router.get('/profile', authenticator.protect, SettingsController.fetchUser)
+router.get('/profile', authenticator.protect, SettingsController.fetchSeller)
 
 // Method POST
 router.post('/signup', authenticator.authProtect,LoginController.signUp)
 
 // Method PUT
-// router.put('/profile', SettingsController.updateUser)
-// router.put('/password', SettingsController.changedPassword)
+router.put('/profile', authenticator.protect,SettingsController.updateSeller)
+router.put('/password',authenticator.protect, SettingsController.changedPassword)
 
 
 

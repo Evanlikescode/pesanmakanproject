@@ -1,17 +1,16 @@
 
-const mysql = require('../../models/methods/User')
+const mysql = require('../../models/methods/Seller')
 
 class SettingsController{
 
 
-    static fetchUser(req, res){
-        
+    static fetchSeller(req, res){
         const query = {
-            "fullname": req.session.fullname,
+            "seller_name": req.session.seller_name,
             "email": req.session.email
         }
 
-        mysql.getUser(query, (err, data) => {
+        mysql.getSeller(query, (err, data) => {
             if (err){
                 res.status(500).send(err)
             }else{
@@ -22,24 +21,24 @@ class SettingsController{
     }
 
 
-    static updateUser(req, res){
+    static updateSeller(req, res){
 
         const infAuth = {
             "id_user": req.session.id_user,
-            "fullname": req.session.fullname,
+            "seller_name": req.session.seller_name,
             "email": req.session.email
         }
 
         const query = {
-            "fullname": req.body.fullname
+            "seller_name": req.body.seller_name
         }
 
-        mysql.updateUser(infAuth, query, (err, data) => {
+        mysql.updateSeller(infAuth, query, (err, data) => {
             if(err){
                 res.status(500).send(err)
             }else{ 
                 if(data.status == "success"){
-                    req.session.fullname = data.data.fullname
+                    req.session.seller_name = data.data.seller_name
                 }
                 res.status(201).send(data)
             }
