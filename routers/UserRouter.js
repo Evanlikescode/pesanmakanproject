@@ -3,6 +3,7 @@ const SettingsController = require('../controllers/user/SettingsController')
 const router = require('express').Router()
 const authenticator = require('../helper/general/Authenticator')
 
+
 // Method GET
 router.get('/login', authenticator.authProtect, LoginController.login)
 router.get('/logout', authenticator.protect, LoginController.logout)

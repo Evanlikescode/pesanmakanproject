@@ -12,6 +12,7 @@ const store = new session.MemoryStore();
 
 // List Router
 const UserRouter = require('./routers/UserRouter')
+const SellerRouter = require('./routers/SellerRouter')
 
 // Json Parser
 app.use(bodyParser.json())
@@ -30,6 +31,7 @@ app.use(
 
 // App Router
 app.use("/", UserRouter)
+app.use("/seller", SellerRouter)
 
 
 
