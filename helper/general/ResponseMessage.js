@@ -4,7 +4,8 @@ const response = {
         "fetch": 201,
         "clientError": 401,
         "notFound": 404,
-        "serverError": 500
+        "serverError": 500,
+        "forbidden": 403
     },
     "generalMessage": {
         "successStatus": "success",
@@ -31,7 +32,12 @@ const response = {
     },
     "authMessage": {
         "noAuth": "Please login to your account first",
-        "alreadyAuth": "Already authenticated"
+        "alreadyAuth": "Already authenticated",
+        "forbiddenAuth": "You don't have any access"
+    },
+    "productMessage":{
+        "createdSuccess": "product created",
+        "createdFailed": "Failed to create new product"
     }
 }
 

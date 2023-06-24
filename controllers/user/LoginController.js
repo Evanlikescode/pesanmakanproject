@@ -20,6 +20,7 @@ class LoginController{
                     req.session.id_user = data.data.id
                     req.session.fullname = data.data.fullname
                     req.session.email = data.data.email
+                    req.session.id_role = data.data.role
                 }
                 res.status(201).send(data)
             }
@@ -41,6 +42,7 @@ class LoginController{
                     req.session.id_user = data.data.id
                     req.session.fullname = data.data.fullname
                     req.session.email = data.data.email
+                    req.session.id_role = data.data.role
                     res.status(201).send(data)
                 }else if(data.status == "failed"){
                     if(req.session != undefined){

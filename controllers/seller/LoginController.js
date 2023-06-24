@@ -17,9 +17,10 @@ class LoginController{
             }else{
                 if(data.status == "success" && !authenticated){
                     req.session.authenticated = true
-                    req.session.id_user = data.data.id
+                    req.session.id_seller = data.data.id
                     req.session.seller_name = data.data.seller_name
                     req.session.email = data.data.email
+                    req.session.id_role = data.data.role
                 }
                 res.status(201).send(data)
             }
@@ -38,9 +39,11 @@ class LoginController{
             }else{
                 if(data.status == "success" && !authenticated){
                     req.session.authenticated = true
-                    req.session.id_user = data.data.id
+                    req.session.id_seller = data.data.id
                     req.session.seller_name = data.data.seller_name
                     req.session.email = data.data.email
+                    req.session.id_role = data.data.role
+                    
                     res.status(201).send(data)
                 }else if(data.status == "failed"){
                     if(req.session != undefined){

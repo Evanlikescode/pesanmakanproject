@@ -23,7 +23,8 @@ class Seller{
                             const valueParser = {
                                 "id": parser[0].uuid_seller,
                                 "seller_name": parser[0].seller_name,
-                                "email": parser[0].email
+                                "email": parser[0].email,
+                                "role": parser[0].role_id
                             }                                  
                             result(null, handlers.signUpResponse(null, valueParser, "success"))    
                         })
@@ -54,7 +55,8 @@ class Seller{
                     const valueParser = {
                         "id": parser[0].uuid_seller,
                         "seller_name": parser[0].seller_name,
-                        "email": parser[0].email
+                        "email": parser[0].email,
+                        "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
                 }
@@ -108,7 +110,7 @@ class Seller{
                     }else{
                         const data = [infAuth, query]
                         con.query(`SELECT  seller_name FROM ${tableName.seller} 
-                        WHERE uuid_seller != '${infAuth.id_user}' AND seller_name = '${query.seller_name}' `, (err,rowz) => {
+                        WHERE uuid_seller != '${infAuth.id_seller}' AND seller_name = '${query.seller_name}' `, (err,rowz) => {
                             if(JSON.parse(JSON.stringify(rowz)).length == 0 ){
                                 con.query(`UPDATE   
                                     ${tableName.seller} SET seller_name = "${query.seller_name}"

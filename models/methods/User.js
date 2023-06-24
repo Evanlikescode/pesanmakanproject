@@ -24,7 +24,8 @@ class User{
                             const valueParser = {
                                 "id": parser[0].uuid_user,
                                 "fullname": parser[0].fullname,
-                                "email": parser[0].email
+                                "email": parser[0].email,
+                                "role": parser[0].role_id
                             }                                  
                             result(null, handlers.signUpResponse(null, valueParser, "success"))    
                         })
@@ -55,7 +56,8 @@ class User{
                     const valueParser = {
                         "id": parser[0].uuid_user,
                         "fullname": parser[0].fullname,
-                        "email": parser[0].email
+                        "email": parser[0].email,
+                        "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
                 }

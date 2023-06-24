@@ -24,7 +24,7 @@ class SettingsController{
     static updateSeller(req, res){
 
         const infAuth = {
-            "id_user": req.session.id_user,
+            "id_seller": req.session.id_seller,
             "seller_name": req.session.seller_name,
             "email": req.session.email
         }

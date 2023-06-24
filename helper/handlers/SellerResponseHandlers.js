@@ -33,7 +33,8 @@ class SellerResponseHandlers  {
                 responseStruct.data = {
                     "email": `${data.email}`,
                     "seller_name": `${data.seller_name}`,
-                    "id": data.id
+                    "id": data.id,
+                    "role": data.role
                 }
                 return responseStruct
             }
@@ -70,9 +71,10 @@ class SellerResponseHandlers  {
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.loginSuccess
                 responseStruct.data = {
-                    "id": data.id,
+                    "email": `${data.email}`,
                     "seller_name": `${data.seller_name}`,
-                    "email": `${data.email}`
+                    "id": data.id,
+                    "role": data.role
                 }
                 return responseStruct
             }

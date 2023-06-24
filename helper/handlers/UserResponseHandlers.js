@@ -33,7 +33,8 @@ class UserResponseHandlers  {
                 responseStruct.data = {
                     "email": `${data.email}`,
                     "fullname": `${data.fullname}`,
-                    "id": data.id
+                    "id": data.id,
+                    "role": data.role
                 }
                 return responseStruct
             }
@@ -45,6 +46,14 @@ class UserResponseHandlers  {
         responseStruct.http = response.statusCode.clientError
         responseStruct.status = response.generalMessage.failedStatus
         responseStruct.message = response.authMessage.noAuth
+        responseStruct.data = null
+        return responseStruct
+    }
+
+    static forbiddenResponse(){
+        responseStruct.http = response.statusCode.forbidden
+        responseStruct.status = response.generalMessage.failedStatus
+        responseStruct.message = response.authMessage.forbiddenAuth
         responseStruct.data = null
         return responseStruct
     }
@@ -70,9 +79,10 @@ class UserResponseHandlers  {
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.loginSuccess
                 responseStruct.data = {
-                    "id": data.id,
+                    "email": `${data.email}`,
                     "fullname": `${data.fullname}`,
-                    "email": `${data.email}`
+                    "id": data.id,
+                    "role": data.role
                 }
                 return responseStruct
             }
