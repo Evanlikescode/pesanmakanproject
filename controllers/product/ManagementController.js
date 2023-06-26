@@ -22,12 +22,28 @@ class ManagementController{
         })
     }
 
-    static fetch(req, res){
+    static fetchBySeller(req, res){
         const query = {
-            'id_seller': req.session.id_seller,
+            'id_seller': req.params.id_seller,
         }
         
-        mysql.fetchAll(query, (err, data) => {
+        mysql.fetchBySeller(query, (err, data) => {
+            if(err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+
+    }
+
+    static fetchById(req, res){
+        const query = {
+            'id_seller': req.params.id_seller,
+            'id_product': req.params.id
+        }
+        
+        mysql.fetchById(query, (err, data) => {
             if(err){
                 res.status(500).send(err)
             }else{

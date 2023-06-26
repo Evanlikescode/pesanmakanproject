@@ -33,7 +33,7 @@ class Product{
     }
 
 
-    static fetchAll(query, result){
+    static fetchBySeller(query, result){
         return con.query(`SELECT * FROM ${tableName.product} WHERE seller_id = '${query.id_seller}' `, (err, rows) => {
             if (err) {
                 result(handlers.fetchResponse(err, null, null), null)
@@ -66,7 +66,31 @@ class Product{
 
     }
 
-
+    static fetchById(query, result){
+        return con.query(`SELECT * FROM ${tableName.product} WHERE seller_id = '${query.id_seller}' AND id = ${query.id_product} `, (err, rows) => {
+            if (err) {
+                result(handlers.fetchResponse(err, null, null), null)
+            }else{
+                const parser = JSON.parse(JSON.stringify(rows))
+                
+                if(parser.length == 0){
+                    result(null ,handlers.fetchResponse(null, null, null))
+                }else{
+                    const valueParser = {
+                        "id": parser[0].id,
+                        "product_name": parser[0].product_name,
+                        "product_desc": parser[0].product_desc,
+                        "product_image": parser[0].product_image,
+                        "product_price": parser[0].product_price,
+                        "product_available": parser[0].product_available,
+                    }
+                    
+                    result(null, handlers.fetchResponse(null, valueParser, "success"))
+                }
+            
+            } 
+        })
+    }
 
 }
 
