@@ -22,6 +22,22 @@ class ManagementController{
         })
     }
 
+    static fetch(req, res){
+        const query = {
+            'id_seller': req.session.id_seller,
+        }
+        
+        mysql.fetchAll(query, (err, data) => {
+            if(err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+
+    }
+
+
 
 
 }

@@ -2,10 +2,9 @@ const ManagementController = require('../controllers/product/ManagementControlle
 const router = require('express').Router()
 const authenticator = require('../helper/general/Authenticator')
 
+// Method GET
+router.get('/all', [authenticator.protect, authenticator.sellerProtect], ManagementController.fetch)
 
-// router.get('/login', authenticator.authProtect, LoginController.login)
-// router.get('/logout', authenticator.protect, LoginController.logout)
-// router.get('/profile', authenticator.protect, SettingsController.fetchSeller)
 
 // Method POST
 router.post('/', [authenticator.protect, authenticator.sellerProtect], ManagementController.create)

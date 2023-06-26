@@ -21,9 +21,9 @@ class Seller{
                         con.query(`SELECT * FROM ${tableName.seller} WHERE email = '${query.email}' AND password = '${query.password}'`, (err, rows) => {
                             const parser = JSON.parse(JSON.stringify(rows))
                             const valueParser = {
-                                "id": parser[0].uuid_seller,
-                                "seller_name": parser[0].seller_name,
                                 "email": parser[0].email,
+                                "seller_name": parser[0].seller_name,
+                                "id": parser[0].uuid_seller,
                                 "role": parser[0].role_id
                             }                                  
                             result(null, handlers.signUpResponse(null, valueParser, "success"))    
@@ -53,9 +53,9 @@ class Seller{
                     result(null ,handlers.loginResponse(null, null, null))
                 }else{ 
                     const valueParser = {
-                        "id": parser[0].uuid_seller,
-                        "seller_name": parser[0].seller_name,
                         "email": parser[0].email,
+                        "seller_name": parser[0].seller_name,
+                        "id": parser[0].uuid_seller,
                         "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
@@ -85,9 +85,9 @@ class Seller{
                 result(null ,handlers.getSellerResponse(null, null, null))
             }else{ 
                 const valueParser = {
-                    "id": parser[0].uuid_seller,
+                    "email": parser[0].email,
                     "seller_name": parser[0].seller_name,
-                    "email": parser[0].email
+                    "id": parser[0].uuid_seller
                 }
                 result(null, handlers.getSellerResponse(null, valueParser, "success"))
             }

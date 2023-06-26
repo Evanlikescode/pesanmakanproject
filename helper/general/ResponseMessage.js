@@ -36,8 +36,10 @@ const response = {
         "forbiddenAuth": "You don't have any access"
     },
     "productMessage":{
-        "createdSuccess": "product created",
-        "createdFailed": "Failed to create new product"
+        "createdSuccess": "Product created",
+        "createdFailed": "Failed to create new product",
+        "fetchSuccess": "Product fetched",
+        "fetchFailed": "Product failed to fetch"
     }
 }
 

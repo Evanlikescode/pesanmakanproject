@@ -22,9 +22,9 @@ class User{
                         con.query(`SELECT * FROM ${tableName.user} WHERE email = '${query.email}' AND password = '${query.password}'`, (err, rows) => {
                             const parser = JSON.parse(JSON.stringify(rows))
                             const valueParser = {
-                                "id": parser[0].uuid_user,
-                                "fullname": parser[0].fullname,
                                 "email": parser[0].email,
+                                "fullname": parser[0].fullname,
+                                "id": parser[0].uuid_user,
                                 "role": parser[0].role_id
                             }                                  
                             result(null, handlers.signUpResponse(null, valueParser, "success"))    
@@ -54,9 +54,9 @@ class User{
                     result(null ,handlers.loginResponse(null, null, null))
                 }else{ 
                     const valueParser = {
-                        "id": parser[0].uuid_user,
-                        "fullname": parser[0].fullname,
                         "email": parser[0].email,
+                        "fullname": parser[0].fullname,
+                        "id": parser[0].uuid_user,
                         "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
@@ -86,9 +86,9 @@ class User{
                 result(null ,handlers.getUserResponse(null, null, null))
             }else{ 
                 const valueParser = {
-                    "id": parser[0].uuid_user,
+                    "email": parser[0].email,
                     "fullname": parser[0].fullname,
-                    "email": parser[0].email
+                    "id": parser[0].uuid_user
                 }
                 result(null, handlers.getUserResponse(null, valueParser, "success"))
             }

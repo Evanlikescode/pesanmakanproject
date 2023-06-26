@@ -33,6 +33,40 @@ class Product{
     }
 
 
+    static fetchAll(query, result){
+        return con.query(`SELECT * FROM ${tableName.product} WHERE seller_id = '${query.id_seller}' `, (err, rows) => {
+            if (err) {
+                result(handlers.fetchResponse(err, null, null), null)
+            }else{
+                const parser = JSON.parse(JSON.stringify(rows))
+                
+                if(parser.length == 0){
+                    result(null ,handlers.fetchResponse(null, null, null))
+                }else{
+                    const valueParser = []
+                    for(let x in parser){
+                        valueParser.push({
+                            "id": parser[x].id,
+                            "product_name": parser[x].product_name,
+                            "product_desc": parser[x].product_desc,
+                            "product_image": parser[x].product_image,
+                            "product_price": parser[x].product_price,
+                            "product_available": parser[x].product_available,
+                        })
+                    }
+                    result(null, handlers.fetchResponse(null, valueParser, "success"))
+                }
+            
+            }
+            
+               
+            
+        })
+
+
+    }
+
+
 
 }
 

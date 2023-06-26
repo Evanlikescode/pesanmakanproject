@@ -30,12 +30,7 @@ class SellerResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.signUpSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "seller_name": `${data.seller_name}`,
-                    "id": data.id,
-                    "role": data.role
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }
@@ -70,12 +65,7 @@ class SellerResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.loginSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "seller_name": `${data.seller_name}`,
-                    "id": data.id,
-                    "role": data.role
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }
@@ -118,11 +108,7 @@ class SellerResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.fetchSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "seller_name": `${data.seller_name}`,
-                    "id": data.id
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }

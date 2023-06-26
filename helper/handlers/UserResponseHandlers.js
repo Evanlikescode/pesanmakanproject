@@ -30,12 +30,7 @@ class UserResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.signUpSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "fullname": `${data.fullname}`,
-                    "id": data.id,
-                    "role": data.role
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }
@@ -78,12 +73,7 @@ class UserResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.loginSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "fullname": `${data.fullname}`,
-                    "id": data.id,
-                    "role": data.role
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }
@@ -126,11 +116,7 @@ class UserResponseHandlers  {
                 responseStruct.http = response.statusCode.fetch
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.fetchSuccess
-                responseStruct.data = {
-                    "email": `${data.email}`,
-                    "fullname": `${data.fullname}`,
-                    "id": data.id
-                }
+                responseStruct.data = data
                 return responseStruct
             }
         }
