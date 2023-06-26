@@ -98,6 +98,32 @@ class Seller{
         
     }
 
+    static getAllSeller(result){
+        return con.query(`SELECT * FROM ${tableName.seller}`, (err, rows) => {
+            if (err) {
+                result(handlers.getSellerResponse(err, null, null), null)
+            }
+            const parser = JSON.parse(JSON.stringify(rows))
+            if(parser.length == 0){
+                result(null ,handlers.getSellerResponse(null, null, null))
+            }else{ 
+                const valueParser = []
+                for(let x in parser){
+                    valueParser.push({
+                        "email": parser[x].email,
+                        "seller_name": parser[x].seller_name,
+                        "id": parser[x].uuid_seller
+                    })
+                }
+                result(null, handlers.getSellerResponse(null, valueParser, "success"))
+            }
+            
+               
+            
+        })
+        
+    }
+
     static updateSeller(infAuth,query, result){
         return con.query(`SELECT * FROM ${tableName.seller} WHERE seller_name = '${infAuth.seller_name}' AND email = '${infAuth.email}'`, (err, rows) => {
             if (err) {

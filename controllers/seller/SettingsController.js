@@ -3,6 +3,15 @@ const mysql = require('../../models/methods/Seller')
 
 class SettingsController{
 
+    static fetchAll(req, res){
+        mysql.getAllSeller((err, data) => {
+            if (err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+    }
 
     static fetchSeller(req, res){
         const query = {
