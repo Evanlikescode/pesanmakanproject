@@ -92,6 +92,59 @@ class Product{
         })
     }
 
+    static update(query, result){
+        return con.query(`SELECT * FROM ${tableName.product} WHERE seller_id = '${query.id_seller}' AND id = ${query.id_product}`, (err, rows) => {
+            if (err) {
+                result(handlers.updateResponse(err, null, null), null)
+            }else{
+                const parser = JSON.parse(JSON.stringify(rows))
+                if(parser.length == 0){ 
+                    result(null ,handlers.updateResponse(null, null, null))
+                }else{
+                    const data = {
+                        'id_product': query.id_product,
+                        'id_seller': query.id_seller,
+                        'product_name': query.product_name ? query.product_name : parser[0].product_name,
+                        'product_desc': query.product_desc ? query.product_desc : parser[0].product_desc,
+                        'product_image': query.product_image ? query.product_image : parser[0].product_image,
+                        'product_price': query.product_price ? query.product_price : parser[0].product_price,
+                        'product_available': query.product_available ? query.product_available : parser[0].product_available
+                    }
+
+                    con.query(`UPDATE ${tableName.product} SET product_name = '${data.product_name}', product_desc = '${data.product_desc}'
+                    ,product_image = '${data.product_image}', product_price=${data.product_price}, product_available=${data.product_available} WHERE 
+                    seller_id = '${data.id_seller}' AND id = ${data.id_product} `)
+                    result(null, handlers.updateResponse(null, data, "success"))
+                }
+            }
+            
+               
+            
+        })
+        
+    }
+
+    static delete(query, result){
+        return con.query(`SELECT * FROM ${tableName.product} WHERE seller_id = '${query.id_seller}' AND id = ${query.id_product}`, (err, rows) => {
+            if (err) {
+                result(handlers.deleteResponse(err, null, null), null)
+            }else{
+                const parser = JSON.parse(JSON.stringify(rows))
+                if(parser.length == 0){ 
+                    result(null ,handlers.deleteResponse(null, null, null))
+                }else{
+                    con.query(`DELETE FROM ${tableName.product}  WHERE seller_id = '${query.id_seller}' AND id = ${query.id_product} `)
+                    result(null, handlers.deleteResponse(null, query, "success"))
+                }
+            }
+            
+                
+            
+        })
+        
+
+    }
+
 }
 
 module.exports = Product

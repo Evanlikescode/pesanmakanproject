@@ -39,7 +39,11 @@ const response = {
         "createdSuccess": "Product created",
         "createdFailed": "Failed to create new product",
         "fetchSuccess": "Product fetched",
-        "fetchFailed": "Product failed to fetch"
+        "fetchFailed": "Product failed to fetch",
+        "updateSuccess": "Product updated",
+        "updateFailed": "Failed to update product",
+        "deleteSuccess": "Product deleted",
+        "deleteFailed": "Product failed to delete"
     }
 }
 

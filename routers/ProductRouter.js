@@ -10,10 +10,10 @@ router.get('/:id_seller/:id', authenticator.protect, ManagementController.fetchB
 router.post('/', [authenticator.protect, authenticator.sellerProtect], ManagementController.create)
 
 // Method PUT
-// router.put('/profile', authenticator.protect,SettingsController.updateSeller)
-// router.put('/password',authenticator.protect, SettingsController.changedPassword)
+router.put('/:id', [authenticator.protect, authenticator.sellerProtect], ManagementController.update)
 
-
+// Method DELETE
+router.delete('/:id', [authenticator.protect, authenticator.sellerProtect], ManagementController.delete)
 
 
 module.exports = router
