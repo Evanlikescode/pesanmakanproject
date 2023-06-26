@@ -3,7 +3,7 @@ const router = require('express').Router()
 const authenticator = require('../helper/general/Authenticator')
 
 // Method GET
-router.get('/all', [authenticator.protect, authenticator.sellerProtect], ManagementController.fetch)
+router.get('/', [authenticator.protect, authenticator.sellerProtect], ManagementController.fetch)
 
 
 // Method POST
