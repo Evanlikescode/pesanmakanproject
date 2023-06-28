@@ -6,6 +6,7 @@ const ListTable = {
     "role": "roles",
     "seller": "seller",
     "status": "status",
+    "bank": "banking"
 }
 
 module.exports = ListTable

@@ -44,6 +44,14 @@ const response = {
         "updateFailed": "Failed to update product",
         "deleteSuccess": "Product deleted",
         "deleteFailed": "Product failed to delete"
+    },
+    "paymentMessage":{
+        "createdSuccess": "Added successfully",
+        "createdFailed": "Failed to add",
+        "paySuccess": "Paid successfully",
+        "payFailed": "Please check your balance",
+        "fetchSuccess": "Total payments fetched",
+        "fetchFailed": "Total payemnts failed to fetch",
     }
 }
 
