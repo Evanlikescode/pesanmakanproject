@@ -61,13 +61,19 @@ class Payment{
                         AND product_id = ${query.product_id}
                         AND status_id = 1001`)
 
-                        con.query(`INSERT INTO ${tableName.bank} (money, status, id_user) 
-                        VALUES (${query.total_payments}, 1002, '${query.id_user}')`)
-
-                        const balances = parser[0].balance - query.total_payments
+                        const balances_user = parser[0].balance - query.total_payments
                         con.query(`UPDATE ${tableName.user} 
-                        SET balance = ${balances} WHERE uuid_user = '${query.id_user}'
+                        SET balance = ${balances_user} WHERE uuid_user = '${query.id_user}'
                         `)
+                        
+                        con.query(`SELECT balance FROM ${tableName.seller} WHERE uuid_seller = '${query.seller_id}'`, (err, rows) => {
+                            const parser = JSON.parse(JSON.stringify(rows))
+                            const balances_seller = parser[0].balance + query.total_payments
+                            con.query(`UPDATE ${tableName.seller} 
+                            SET balance = ${balances_seller} WHERE uuid_seller = '${query.seller_id}'
+                            `)
+
+                        })
 
                         result(null ,handlers.payResponse(null, null, "success"))
 
