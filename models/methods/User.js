@@ -57,6 +57,7 @@ class User{
                         "email": parser[0].email,
                         "fullname": parser[0].fullname,
                         "id": parser[0].uuid_user,
+                        "balance": parser[0].balance,
                         "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
@@ -88,7 +89,9 @@ class User{
                 const valueParser = {
                     "email": parser[0].email,
                     "fullname": parser[0].fullname,
-                    "id": parser[0].uuid_user
+                    "id": parser[0].uuid_user,
+                    "role": parser[0].role_id,
+                    "balance": parser[0].balance
                 }
                 result(null, handlers.getUserResponse(null, valueParser, "success"))
             }

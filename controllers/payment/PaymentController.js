@@ -58,6 +58,19 @@ class Payment{
         })
     }
 
+    static ongoingUser(req, res){
+        const query = {
+            "user_id": req.session.id_user
+        }
+        mysql.fetchOngoing(query, (err, data) => {
+            if(err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+    }
+
     static historyUser(req, res){
         const query = {
             "user_id": req.session.id_user

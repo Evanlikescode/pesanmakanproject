@@ -125,7 +125,6 @@ class Payment{
             paymentSub = "payments.seller_id"
             query.user_id = query.seller_id
         }
-        console.log(paymentSub)
         return con.query(`SELECT payments.*, products.product_name, products.product_desc, products.product_image, products.product_price, products.seller_id 
         FROM payments JOIN products 
         ON payments.product_id = products.id WHERE ${paymentSub} = '${query.user_id}' AND payments.status_id = 1002`, (err, rows) => {
@@ -133,18 +132,45 @@ class Payment{
             const valueParser = []
             for(let x in parser){
                 valueParser.push({
-                    "id": parser[x].id,
+                    "payment_id": parser[x].id,
+                    "product_id": parser[x].product_id,
+                    "seller_id": parser[x].seller_id,
                     "product_name": parser[x].product_name,
                     "product_desc": parser[x].product_desc,
                     "product_image": parser[x].product_image,
                     "product_price": parser[x].product_price,
-                    "product_available": parser[x].product_available,
+                    "total_items": parser[x].total_items,
+                    "total_payments": parser[x].total_payments
                 })
             }
-            console.log(parser)
+            result(null, handlers.fetchResponse(null, valueParser, "success"))
+
         })
     }
 
+    static fetchOngoing(query, result){
+        return con.query(`SELECT payments.*, products.product_name, products.product_desc, products.product_image, products.product_price, products.seller_id 
+        FROM payments JOIN products 
+        ON payments.product_id = products.id WHERE payments.user_id = '${query.user_id}' AND payments.status_id = 1001`, (err, rows) => {
+            const parser = JSON.parse(JSON.stringify(rows))
+            const valueParser = []
+            for(let x in parser){
+                valueParser.push({
+                    "payment_id": parser[x].id,
+                    "product_id": parser[x].product_id,
+                    "seller_id": parser[x].seller_id,
+                    "product_name": parser[x].product_name,
+                    "product_desc": parser[x].product_desc,
+                    "product_image": parser[x].product_image,
+                    "product_price": parser[x].product_price,
+                    "total_items": parser[x].total_items,
+                    "total_payments": parser[x].total_payments
+                })
+            }
+            result(null, handlers.fetchResponse(null, valueParser, "success"))
+
+        })
+    }
 
 
 }

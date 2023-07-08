@@ -56,6 +56,7 @@ class Seller{
                         "email": parser[0].email,
                         "seller_name": parser[0].seller_name,
                         "id": parser[0].uuid_seller,
+                        "balance": parser[0].balance,
                         "role": parser[0].role_id
                     }
                     result(null, handlers.loginResponse(null, valueParser, "success"))
@@ -87,7 +88,9 @@ class Seller{
                 const valueParser = {
                     "email": parser[0].email,
                     "seller_name": parser[0].seller_name,
-                    "id": parser[0].uuid_seller
+                    "id": parser[0].uuid_seller,
+                    "role": parser[0].role_id,
+                    "balance": parser[0].balance
                 }
                 result(null, handlers.getSellerResponse(null, valueParser, "success"))
             }
