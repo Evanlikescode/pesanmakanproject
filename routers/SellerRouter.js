@@ -12,8 +12,8 @@ router.get('/profile', authenticator.protect, SettingsController.fetchSeller)
 router.post('/signup', authenticator.authProtect,LoginController.signUp)
 
 // Method PUT
-router.put('/profile', authenticator.protect,SettingsController.updateSeller)
-router.put('/password',authenticator.protect, SettingsController.changedPassword)
+router.put('/profile', [authenticator.protect, authenticator.sellerProtect],SettingsController.updateSeller)
+router.put('/password',[authenticator.protect, authenticator.sellerProtect], SettingsController.changedPassword)
 
 
 

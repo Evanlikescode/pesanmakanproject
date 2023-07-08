@@ -13,7 +13,6 @@ class Payment{
         }
         mysql.create(query, (err, data) => {
             if(err){
-                console.log(err)
                 res.status(500).send(err)
             }else{
                 res.status(201).send(data)
@@ -41,7 +40,8 @@ class Payment{
                         "payment_id": req.body.payment_id,
                         "seller_id": req.body.seller_id,
                         "product_id": req.body.product_id,
-                        "total_payments": data.data.totalPayments
+                        "total_payments": data.data.totalPayments,
+                        "total_items": data.data.totalItems
                     }
                     mysql.pay(query, (err, data) => {
                         if(err){
@@ -58,6 +58,31 @@ class Payment{
         })
     }
 
+    static historyUser(req, res){
+        const query = {
+            "user_id": req.session.id_user
+        }
+        mysql.fetchHistory(query, (err, data) => {
+            if(err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+    }
+
+    static historySeller(req, res){
+        const query = {
+            "seller_id": req.session.id_seller
+        }
+        mysql.fetchHistory(query, (err, data) => {
+            if(err){
+                res.status(500).send(err)
+            }else{
+                res.status(201).send(data)
+            }
+        })
+    }
 }
 
 module.exports = Payment

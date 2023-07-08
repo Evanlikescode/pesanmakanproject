@@ -50,8 +50,8 @@ const response = {
         "createdFailed": "Failed to add",
         "paySuccess": "Paid successfully",
         "payFailed": "Please check your balance",
-        "fetchSuccess": "Total payments fetched",
-        "fetchFailed": "Total payemnts failed to fetch",
+        "fetchSuccess": "Succeed to fetch",
+        "fetchFailed": "Failed to fetch",
     }
 }
 
