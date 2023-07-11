@@ -125,25 +125,34 @@ class Payment{
             paymentSub = "payments.seller_id"
             query.user_id = query.seller_id
         }
-        return con.query(`SELECT payments.*, products.product_name, products.product_desc, products.product_image, products.product_price, products.seller_id 
-        FROM payments JOIN products 
-        ON payments.product_id = products.id WHERE ${paymentSub} = '${query.user_id}' AND payments.status_id = 1002`, (err, rows) => {
-            const parser = JSON.parse(JSON.stringify(rows))
-            const valueParser = []
-            for(let x in parser){
-                valueParser.push({
-                    "payment_id": parser[x].id,
-                    "product_id": parser[x].product_id,
-                    "seller_id": parser[x].seller_id,
-                    "product_name": parser[x].product_name,
-                    "product_desc": parser[x].product_desc,
-                    "product_image": parser[x].product_image,
-                    "product_price": parser[x].product_price,
-                    "total_items": parser[x].total_items,
-                    "total_payments": parser[x].total_payments
-                })
+        return con.query(`SELECT payments.*, products.product_name, products.product_desc, products.product_image, products.product_price, products.seller_id, status.* 
+        FROM payments 
+        JOIN products 
+        ON payments.product_id = products.id 
+        JOIN status 
+        ON payments.status_id = status.id_status
+        WHERE ${paymentSub} = '${query.user_id}' AND (payments.status_id = 1002 OR payments.status_id = 1004)`, (err, rows) => {
+            if(err){
+                result(handlers.fetchResponse(err, null, null), null)
+            }else{
+                const parser = JSON.parse(JSON.stringify(rows))
+                const valueParser = []
+                for(let x in parser){
+                    valueParser.push({
+                        "product_id": parser[x].product_id,
+                        "seller_id": parser[x].seller_id,
+                        "product_name": parser[x].product_name,
+                        "product_desc": parser[x].product_desc,
+                        "product_image": parser[x].product_image,
+                        "product_price": parser[x].product_price,
+                        "total_items": parser[x].total_items,
+                        "total_payments": parser[x].total_payments,
+                        "status_payment": parser[x].status_name
+                    })
+                }
+                result(null, handlers.fetchResponse(null, valueParser, "success"))
             }
-            result(null, handlers.fetchResponse(null, valueParser, "success"))
+            
 
         })
     }
@@ -169,6 +178,43 @@ class Payment{
             }
             result(null, handlers.fetchResponse(null, valueParser, "success"))
 
+        })
+    }
+
+    static cancceledPayment(query, result){
+        return con.query(`SELECT * 
+        FROM ${tableName.payment} WHERE product_id = ${query.product_id} 
+        AND user_id = '${query.user_id}' AND status_id = 1001`, (err, rows) => {
+            if (err) {
+                result(handlers.deleteResponse(err, null, null), null)
+            }else{ 
+                const parser = JSON.parse(JSON.stringify(rows))
+                if(parser.length == 0){
+                    result(null,handlers.deleteResponse(null, null, null))
+                }else{
+                    con.query(`SELECT product_available 
+                    FROM ${tableName.product} WHERE id = ${query.product_id}`, (err, rows) => {
+                        if(err){
+                            result(handlers.deleteResponse(err, null, null), null)
+                        }else{
+                            const parser = JSON.parse(JSON.stringify(rows))
+                            if(parser.length == 0){
+                                result(null,handlers.deleteResponse(null, null, null))
+                            }else{
+                                con.query(`UPDATE ${tableName.payment} SET status_id = 1004 
+                                WHERE id = ${query.payment_id} AND user_id = '${query.user_id}' AND product_id = ${query.product_id}`)
+    
+                                const addProdAvail = parser[0].product_available + query.total_items
+    
+                                con.query(`UPDATE ${tableName.product} 
+                                SET product_available = ${addProdAvail} WHERE id = ${query.product_id}`)
+                            }
+                        }
+                    })
+                    result(null,handlers.deleteResponse(null, null, "success"))
+
+                }
+            }
         })
     }
 

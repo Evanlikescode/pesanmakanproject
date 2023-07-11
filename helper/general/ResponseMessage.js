@@ -52,6 +52,8 @@ const response = {
         "payFailed": "Please check your balance",
         "fetchSuccess": "Succeed to fetch",
         "fetchFailed": "Failed to fetch",
+        "cancelledSuccess": "Cancelled",
+        "cancelledFailed": "Failed to cancel"
     }
 }
 

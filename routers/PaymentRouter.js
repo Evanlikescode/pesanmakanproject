@@ -14,7 +14,8 @@ router.post('/', [authenticator.protect, authenticator.userProtect], PaymentCont
 // Method PUT
 router.put('/', [authenticator.protect, authenticator.userProtect], PaymentController.pay)
 
-
+// Method Delete
+router.delete('/', [authenticator.protect, authenticator.userProtect], PaymentController.cancelledUser)
 
 
 module.exports = router

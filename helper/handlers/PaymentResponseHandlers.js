@@ -87,6 +87,34 @@ class PaymentResponseHandlers  {
         
     }
 
+    static deleteResponse(err, data, result){
+        if(err){
+            responseStruct.http = response.statusCode.serverError
+            responseStruct.status = response.generalMessage.failedStatus
+            responseStruct.message = response.generalMessage.failedMessage
+            responseStruct.data = {
+                "error": err
+            }
+            return responseStruct
+        }else{
+            if(result == null){
+                responseStruct.http = response.statusCode.fetch
+                responseStruct.status = response.generalMessage.failedStatus
+                responseStruct.message = response.paymentMessage.cancelledFailed
+                responseStruct.data = null
+                return responseStruct
+                
+            }else{
+                responseStruct.http = response.statusCode.fetch
+                responseStruct.status = response.generalMessage.successStatus
+                responseStruct.message = response.paymentMessage.cancelledSuccess
+                responseStruct.data = null
+                return responseStruct
+            }
+        }
+        
+    }
+
 
 }
 
