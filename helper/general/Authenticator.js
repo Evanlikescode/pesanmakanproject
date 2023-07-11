@@ -18,6 +18,22 @@ class Authenticator{
             next()
         }
     }
+
+    static sellerProtect(req, res, next){
+        if(req.session.id_role != 1){
+            res.status(403).send(handlers.forbiddenResponse())
+        }else{
+            next()
+        }
+    }
+
+    static userProtect(req, res, next){
+        if(req.session.id_role != 2){
+            res.status(403).send(handlers.forbiddenResponse())
+        }else{
+            next()
+        }
+    }
     
 
 }

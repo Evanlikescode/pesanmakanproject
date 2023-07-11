@@ -2,7 +2,7 @@
 const response = require('../general/ResponseMessage')
 const responseStruct = require('../general/ResponseStructure')
 
-class UserResponseHandlers  {
+class SellerResponseHandlers  {
     static signUpResponse(err, data, result){
         if(err){
             responseStruct.http = response.statusCode.serverError
@@ -41,14 +41,6 @@ class UserResponseHandlers  {
         responseStruct.http = response.statusCode.clientError
         responseStruct.status = response.generalMessage.failedStatus
         responseStruct.message = response.authMessage.noAuth
-        responseStruct.data = null
-        return responseStruct
-    }
-
-    static forbiddenResponse(){
-        responseStruct.http = response.statusCode.forbidden
-        responseStruct.status = response.generalMessage.failedStatus
-        responseStruct.message = response.authMessage.forbiddenAuth
         responseStruct.data = null
         return responseStruct
     }
@@ -96,7 +88,7 @@ class UserResponseHandlers  {
         return responseStruct
     }
     
-    static getUserResponse(err, data, result){
+    static getSellerResponse(err, data, result){
         if(err){
             responseStruct.http = response.statusCode.serverError
             responseStruct.status = response.generalMessage.failedStatus
@@ -151,8 +143,8 @@ class UserResponseHandlers  {
                 responseStruct.status = response.generalMessage.successStatus
                 responseStruct.message = response.userMessage.updateSuccess
                 responseStruct.data = {
-                    "fullname": `${data[1].fullname}`,
-                    "old_fullname": `${data[0].fullname}`,
+                    "seller_name": `${data[1].seller_name}`,
+                    "old_seller_name": `${data[0].seller_name}`,
                     "email": `${data[0].email}`
                 }
                 return responseStruct
@@ -209,4 +201,4 @@ class UserResponseHandlers  {
 }
 
 
-module.exports = UserResponseHandlers
+module.exports = SellerResponseHandlers

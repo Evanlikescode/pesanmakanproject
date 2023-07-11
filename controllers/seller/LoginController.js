@@ -1,5 +1,5 @@
 
-const mysql = require('../../models/methods/User')
+const mysql = require('../../models/methods/Seller')
 const {v4 : uuidv4} = require('uuid')
 
 class LoginController{
@@ -7,18 +7,18 @@ class LoginController{
         const { authenticated } = req.session
         const query = {
             'id': uuidv4(),
-            'fullname': req.body.fullname,
+            'seller_name': req.body.seller_name,
             'email': req.body.email,
             'password': req.body.password
         }
-        mysql.signUpUser(query, (err, data) => {
+        mysql.signUpSeller(query, (err, data) => {
             if(err){
                res.status(500).send(err)
             }else{
                 if(data.status == "success" && !authenticated){
                     req.session.authenticated = true
-                    req.session.id_user = data.data.id
-                    req.session.fullname = data.data.fullname
+                    req.session.id_seller = data.data.id
+                    req.session.seller_name = data.data.seller_name
                     req.session.email = data.data.email
                     req.session.id_role = data.data.role
                 }
@@ -33,16 +33,17 @@ class LoginController{
             'email': req.body.email,
             'password': req.body.password
         }
-        mysql.loginUser(query, (err, data) => {
+        mysql.loginSeller(query, (err, data) => {
             if(err){
                 res.status(500).send(err)
             }else{
                 if(data.status == "success" && !authenticated){
                     req.session.authenticated = true
-                    req.session.id_user = data.data.id
-                    req.session.fullname = data.data.fullname
+                    req.session.id_seller = data.data.id
+                    req.session.seller_name = data.data.seller_name
                     req.session.email = data.data.email
                     req.session.id_role = data.data.role
+                    
                     res.status(201).send(data)
                 }else if(data.status == "failed"){
                     if(req.session != undefined){

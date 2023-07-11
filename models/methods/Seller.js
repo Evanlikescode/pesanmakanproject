@@ -1,30 +1,29 @@
 const con = require('../connection')
-const handlers = require('../../helper/handlers/UserResponseHandlers')
+const handlers = require('../../helper/handlers/SellerResponseHandlers')
 const tableName = require('../../helper/general/ListTable')
 
-class User{
-    static signUpUser(query, result){
-        return con.query(`SELECT * FROM ${tableName.user} WHERE fullname = '${query.fullname}' OR email = '${query.email}'`, (err, rows) => {
+class Seller{
+    static signUpSeller(query, result){
+        return con.query(`SELECT * FROM ${tableName.seller} WHERE seller_name = '${query.seller_name}' OR email = '${query.email}'`, (err, rows) => {
             if (err) {
                 result(handlers.signUpResponse(err, null, null), null)
             }else{
                 const parser = JSON.parse(JSON.stringify(rows))
-                console.log(query.email)
-                if(query.fullname && query.password && query.email != ''){
+                if(query.seller_name && query.password && query.email != ''){
                     if(parser.length != 0){
                         result(null ,handlers.signUpResponse(null, null, null))
                     }else{
                         con.query(`INSERT INTO  
-                            ${tableName.user} (uuid_user, fullname, email, password, role_id) 
-                            VALUES ('${query.id}','${query.fullname}', '${query.email}', '${query.password}', 2)
+                            ${tableName.seller} (uuid_seller, seller_name, email, password, role_id) 
+                            VALUES ('${query.id}','${query.seller_name}', '${query.email}', '${query.password}', 2)
                             `
                         )
-                        con.query(`SELECT * FROM ${tableName.user} WHERE email = '${query.email}' AND password = '${query.password}'`, (err, rows) => {
+                        con.query(`SELECT * FROM ${tableName.seller} WHERE email = '${query.email}' AND password = '${query.password}'`, (err, rows) => {
                             const parser = JSON.parse(JSON.stringify(rows))
                             const valueParser = {
                                 "email": parser[0].email,
-                                "fullname": parser[0].fullname,
-                                "id": parser[0].uuid_user,
+                                "seller_name": parser[0].seller_name,
+                                "id": parser[0].uuid_seller,
                                 "role": parser[0].role_id
                             }                                  
                             result(null, handlers.signUpResponse(null, valueParser, "success"))    
@@ -41,11 +40,11 @@ class User{
         
     }
 
-    static loginUser(query, result){
+    static loginSeller(query, result){
         if(query.email == undefined && query.password == undefined){
             return result(null, handlers.loginResponse(null, null, null))
         }else{
-            return con.query(`SELECT * FROM ${tableName.user} WHERE email = '${query.email}' AND password = '${query.password}' `, (err, rows) => {
+            return con.query(`SELECT * FROM ${tableName.seller} WHERE email = '${query.email}' AND password = '${query.password}' `, (err, rows) => {
                 if (err) {
                     result(handlers.loginResponse(err, null, null), null)
                 }
@@ -55,8 +54,8 @@ class User{
                 }else{ 
                     const valueParser = {
                         "email": parser[0].email,
-                        "fullname": parser[0].fullname,
-                        "id": parser[0].uuid_user,
+                        "seller_name": parser[0].seller_name,
+                        "id": parser[0].uuid_seller,
                         "balance": parser[0].balance,
                         "role": parser[0].role_id
                     }
@@ -68,7 +67,7 @@ class User{
         
     }
     
-    static logoutUser(){
+    static logoutSeller(){
         return handlers.logoutResponse()
     }
 
@@ -77,23 +76,23 @@ class User{
     }
 
     
-    static getUser(query, result){
-        return con.query(`SELECT * FROM ${tableName.user} WHERE fullname = '${query.fullname}' AND email = '${query.email}'`, (err, rows) => {
+    static getSeller(query, result){
+        return con.query(`SELECT * FROM ${tableName.seller} WHERE seller_name = '${query.seller_name}' AND email = '${query.email}'`, (err, rows) => {
             if (err) {
-                result(handlers.getUserResponse(err, null, null), null)
+                result(handlers.getSellerResponse(err, null, null), null)
             }
             const parser = JSON.parse(JSON.stringify(rows))
             if(parser.length == 0){
-                result(null ,handlers.getUserResponse(null, null, null))
+                result(null ,handlers.getSellerResponse(null, null, null))
             }else{ 
                 const valueParser = {
                     "email": parser[0].email,
-                    "fullname": parser[0].fullname,
-                    "id": parser[0].uuid_user,
+                    "seller_name": parser[0].seller_name,
+                    "id": parser[0].uuid_seller,
                     "role": parser[0].role_id,
                     "balance": parser[0].balance
                 }
-                result(null, handlers.getUserResponse(null, valueParser, "success"))
+                result(null, handlers.getSellerResponse(null, valueParser, "success"))
             }
             
                
@@ -102,22 +101,48 @@ class User{
         
     }
 
-    static updateUser(infAuth,query, result){
-        return con.query(`SELECT * FROM ${tableName.user} WHERE fullname = '${infAuth.fullname}' AND email = '${infAuth.email}'`, (err, rows) => {
+    static getAllSeller(result){
+        return con.query(`SELECT * FROM ${tableName.seller}`, (err, rows) => {
+            if (err) {
+                result(handlers.getSellerResponse(err, null, null), null)
+            }
+            const parser = JSON.parse(JSON.stringify(rows))
+            if(parser.length == 0){
+                result(null ,handlers.getSellerResponse(null, null, null))
+            }else{ 
+                const valueParser = []
+                for(let x in parser){
+                    valueParser.push({
+                        "email": parser[x].email,
+                        "seller_name": parser[x].seller_name,
+                        "id": parser[x].uuid_seller
+                    })
+                }
+                result(null, handlers.getSellerResponse(null, valueParser, "success"))
+            }
+            
+               
+            
+        })
+        
+    }
+
+    static updateSeller(infAuth,query, result){
+        return con.query(`SELECT * FROM ${tableName.seller} WHERE seller_name = '${infAuth.seller_name}' AND email = '${infAuth.email}'`, (err, rows) => {
             if (err) {
                 result(handlers.signUpResponse(err, null, null), null)
             }else{
                 const parser = JSON.parse(JSON.stringify(rows))
-                if(query.fullname != ''){
+                if(query.seller_name != ''){
                     if(parser.length == 0){ 
                         result(null ,handlers.updateResponse(null, null, null))
                     }else{
                         const data = [infAuth, query]
-                        con.query(`SELECT  fullname FROM ${tableName.user} 
-                        WHERE uuid_user != '${infAuth.id_user}' AND fullname = '${query.fullname}' `, (err,rowz) => {
+                        con.query(`SELECT  seller_name FROM ${tableName.seller} 
+                        WHERE uuid_seller != '${infAuth.id_seller}' AND seller_name = '${query.seller_name}' `, (err,rowz) => {
                             if(JSON.parse(JSON.stringify(rowz)).length == 0 ){
                                 con.query(`UPDATE   
-                                    ${tableName.user} SET fullname = "${query.fullname}"
+                                    ${tableName.seller} SET seller_name = "${query.seller_name}"
                                     WHERE email = "${infAuth.email}"`
                                 )
                                 result(null, handlers.updateResponse(null, data, "success"))
@@ -139,7 +164,7 @@ class User{
         
     }
     static updatePassword(infAuth,query, result){
-        return con.query(`SELECT * FROM ${tableName.user} WHERE email = '${infAuth.email}'`, (err, rows) => {
+        return con.query(`SELECT * FROM ${tableName.seller} WHERE email = '${infAuth.email}'`, (err, rows) => {
             if (err) {
                 result(handlers.signUpResponse(err, null, null), null)
             }else{
@@ -150,7 +175,7 @@ class User{
                     }else{
                         if(query.old_password === parser[0].password && query.new_password === query.confirm_password){
                             con.query(`UPDATE 
-                            ${tableName.user} 
+                            ${tableName.seller} 
                             SET password = "${query.new_password}" 
                             WHERE email = "${infAuth.email}"`)
                             result(null, handlers.updatePasswordResponse(null, query, "success"))
@@ -174,4 +199,4 @@ class User{
 }
 
 
-module.exports = User
+module.exports = Seller
