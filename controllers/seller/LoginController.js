@@ -1,16 +1,28 @@
 
 const mysql = require('../../models/methods/Seller')
 const {v4 : uuidv4} = require('uuid')
+const QRCode = require('qrcode');
 
 class LoginController{
     static signUp(req,res){
         const { authenticated } = req.session
+        const id_seller = uuidv4()
+        const path_qr = `/Users/evan258/Documents/githubProject/pesanmakanProject/pesanmakanproject/assets/${id_seller}.png`
         const query = {
-            'id': uuidv4(),
+            'id': id_seller,
             'seller_name': req.body.seller_name,
             'email': req.body.email,
-            'password': req.body.password
+            'password': req.body.password,
+            'seller_qr': `http://localhost:3001/qrcode/${id_seller}.png`
         }
+
+        QRCode.toFile(path_qr,id_seller, {
+            errorCorrectionLevel: 'H',
+        }, function(err) {
+            if (err){
+                console.log("QRCODE_SYSTEM_ERROR:", err)
+            };
+        });
         mysql.signUpSeller(query, (err, data) => {
             if(err){
                res.status(500).send(err)

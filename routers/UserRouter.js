@@ -5,7 +5,7 @@ const authenticator = require('../helper/general/Authenticator')
 
 
 // Method GET
-router.get('/login', authenticator.authProtect, LoginController.login)
+router.post('/login', authenticator.authProtect, LoginController.login)
 router.get('/logout', authenticator.protect, LoginController.logout)
 router.get('/profile', [authenticator.protect, authenticator.userProtect], SettingsController.fetchUser)
 

@@ -47,6 +47,7 @@ class Product{
                     for(let x in parser){
                         valueParser.push({
                             "id": parser[x].id,
+                            "seller_id": parser[x].seller_id,
                             "product_name": parser[x].product_name,
                             "product_desc": parser[x].product_desc,
                             "product_image": parser[x].product_image,
@@ -78,6 +79,7 @@ class Product{
                 }else{
                     const valueParser = {
                         "id": parser[0].id,
+                        "seller_id": parser[x].seller_id,
                         "product_name": parser[0].product_name,
                         "product_desc": parser[0].product_desc,
                         "product_image": parser[0].product_image,
