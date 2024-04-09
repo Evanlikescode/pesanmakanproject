@@ -14,8 +14,8 @@ class Seller{
                         result(null ,handlers.signUpResponse(null, null, null))
                     }else{
                         con.query(`INSERT INTO  
-                            ${tableName.seller} (uuid_seller, seller_name, email, password, role_id) 
-                            VALUES ('${query.id}','${query.seller_name}', '${query.email}', '${query.password}', 2)
+                            ${tableName.seller} (uuid_seller, seller_name, email, password, seller_qr, role_id) 
+                            VALUES ('${query.id}','${query.seller_name}', '${query.email}', '${query.password}', '${query.seller_qr}' ,2)
                             `
                         )
                         con.query(`SELECT * FROM ${tableName.seller} WHERE email = '${query.email}' AND password = '${query.password}'`, (err, rows) => {

@@ -7,14 +7,24 @@ const bodyParser = require('body-parser')
 const session = require("express-session");
 const secret = process.env.SESSION_SECRET;
 const store = new session.MemoryStore();
+const cors = require('cors')
 
 
+app.use(cors({
+  origin: "*", 
+  credentials: "*",
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+
+}))
 
 // List Router
 const UserRouter = require('./routers/UserRouter')
 const SellerRouter = require('./routers/SellerRouter')
 const ProductRouter = require('./routers/ProductRouter')
 const PaymentRouter = require('./routers/PaymentRouter')
+
+// QRCODE
+app.use("/qrcode", express.static('assets'))
 
 // Json Parser
 app.use(bodyParser.json())
@@ -30,6 +40,8 @@ app.use(
     store,
   })
 )
+
+
 
 // App Router
 app.use("/", UserRouter)
